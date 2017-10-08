@@ -1,0 +1,94 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/template/template.xhtml">
+
+
+    <ui:define name="content">
+        <h:form id="stdInputFrm" prependId="false" enctype="multipart/form-data">
+            
+           
+            
+            <p:growl/>
+            <p:inputText value="#{studentController.studentDTO.studentName}" />
+            <br />
+            <p:inputText value="#{studentController.studentDTO.studentRoll}" />
+            <br />
+            <p:inputText value="#{studentController.studentDTO.email}" /><br/>	
+
+            <br />
+              <p:fileUpload value="#{studentController.uploadFile}" mode="simple" update="stdInputFrm"> 
+         </p:fileUpload>
+		<br />
+                <p:commandButton value="Save" action="#{studentController.saveStudent}" update="stdInputFrm" ajax="false"/>
+
+
+
+            <p:dataTable value="#{studentController.studentDtoList}" var="student"
+                         paginatorPosition="bottom" paginator="true">
+
+
+                <p:column>
+                    <f:facet name="header">
+                        <p:outputLabel value="Name" />
+                    </f:facet>
+                    <p:outputLabel value="#{student.studentName}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <p:outputLabel value="Roll" />
+                    </f:facet>
+                    <p:outputLabel value="#{student.studentRoll}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <p:outputLabel value="Email" />
+                    </f:facet>
+                    <p:outputLabel value="#{student.email}" />
+                </p:column>
+                <p:column>
+                     <f:facet name="header">
+                        <p:outputLabel value="Photo" />
+                    </f:facet>
+                     <center>
+			<p:graphicImage value="/Upload/Student/#{student.photoPath}" height="50px" width="50"/>
+			</center>
+			
+
+                </p:column>
+
+                <p:column>
+
+                    <f:facet name="header">
+                        <p:outputLabel value="Action" />
+                    </f:facet>
+                  <h:commandButton value="Edit">
+                        <f:setPropertyActionListener value="#{student}"
+                                                     target="#{studentController.studentDTO}" />
+                    </h:commandButton>
+                    <h:commandButton value="Delete"
+                                     action="#{studentController.deleteStudent}">
+                        <f:setPropertyActionListener value="#{student}"
+                                                     target="#{studentController.studentDTO}" />
+                    </h:commandButton>
+
+
+                </p:column>
+
+            </p:dataTable>
+
+        </h:form>
+
+
+
+
+
+
+    </ui:define>   
+
+
+</ui:composition>    
+
+
